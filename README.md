@@ -1,0 +1,2 @@
+# Exodia
+Exodia discord bot
