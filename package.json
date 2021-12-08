@@ -4,5 +4,8 @@
     "fs": "^0.0.1-security",
     "fs-extra": "^10.0.0",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13"
   }
 }
