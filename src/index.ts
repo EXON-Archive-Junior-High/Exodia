@@ -9,16 +9,16 @@ const PATH = path.resolve()
 const { users }: any = readJSONSync(PATH + '/settings.json')
 export const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
 
-client.on('ready', async () => {
+client.once('ready', async () => {
     console.log('[*] Ready')
     client.user?.setActivity('\"!랭킹\" 를 입력하세요', { type: 'LISTENING' })
     getUser(users)
 })
 
-client.on('message', async (msg) => {
+client.once('messageCreate', async (msg) => {
     if (msg.content === '!랭킹') {
-        // console.log(users)
-        // getUser(users)
+        const ranking = getUser(users)
+        console.log(ranking)
         msg.channel.send('d')
     }
 })
