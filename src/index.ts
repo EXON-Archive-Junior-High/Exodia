@@ -1,12 +1,8 @@
-import path from 'path'
-import { readJSONSync } from 'fs-extra'
-import { Client, Intents } from 'discord.js'
+import { Client, Intents, MessageEmbed } from 'discord.js'
 
 import getUser from './getUser'
 
-const PATH = path.resolve()
-
-const { users }: any = readJSONSync(PATH + '/settings.json')
+const { users, token } = require('../settings.json')
 export const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
 
 client.once('ready', async () => {
@@ -15,12 +11,27 @@ client.once('ready', async () => {
     getUser(users)
 })
 
-client.once('messageCreate', async (msg) => {
-    if (msg.content === '!랭킹') {
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return
+
+	const { commandName } = interaction
+
+	if (commandName === '랭킹') {
         const ranking = getUser(users)
-        console.log(ranking)
-        msg.channel.send('d')
-    }
+        const embed = new MessageEmbed({
+            title: '엑조디아 랭킹',
+            description: '엑조디아 멤버들',
+            timestamp: new Date(),
+	        footer: {
+		        text: 'Exodia'
+	        },
+        })
+        for (const user of await ranking) {
+            console.log(user)
+            embed.addField(user.name, user.tier)
+        }
+		await interaction.reply({ embeds: [embed] })
+	}
 })
 
-client.login(process.env.Token)
+client.login(token)
