@@ -1,3 +1,7 @@
 {
-    "user": []
+    "users": [],
+    "clientId": "",
+    "guildId": "",
+    "token": "",
+    "api_key": ""
 }
