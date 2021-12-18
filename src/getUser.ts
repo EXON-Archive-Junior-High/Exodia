@@ -23,12 +23,13 @@ export default async function getUser(users: string[]) {
 
         let points = 0
         let tier = '배치 안봄'
-        for (const profile of profiles) {
-            if ((profile.queueType === 'RANKED_SOLO_5x5') && profiles.length) {
-                console.log(profile)
-                points = ~profiles[0].leaguePoints + rank2int[profiles[0].rank] + tier2int[profiles[0].tier]
-                tier = `${profiles[0].tier} ${profiles[0].rank} ${profiles[0].leaguePoints}`
-                break
+        if (profiles.length) {
+            for (const profile of profiles) {
+                if (profile.queueType === 'RANKED_SOLO_5x5') {
+                    points = ~profile.leaguePoints + rank2int[profile.rank] + tier2int[profile.tier]
+                    tier = `${profile.tier} ${profile.rank} ${profile.leaguePoints}`
+                    break
+                }
             }
         }
         ranking.push({ name: user, value: points, tier: tier})

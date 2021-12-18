@@ -19,7 +19,7 @@ client.on('interactionCreate', async interaction => {
         const ranking = getUser(users)
         const embed = new MessageEmbed({
             title: '엑조디아 랭킹',
-            color: 'GREEN',
+            color: 'PURPLE',
             description: '엑조디아 멤버들',
             timestamp: new Date(),
 	        footer: {
@@ -28,7 +28,6 @@ client.on('interactionCreate', async interaction => {
         })
         let i: number = 1
         for (const user of await ranking) {
-            console.log(user)
             embed.addField(`${i}등 ${user.name}`, user.tier)
             i++
         }
