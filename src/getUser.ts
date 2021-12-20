@@ -12,8 +12,8 @@ interface IUser {
 
 const { api_key } = require('../settings.json')
 
-const rank2int: IDictionary<number> = {'I': 303, 'II': 202, 'III': 101, 'IV': 0}
-const tier2int: IDictionary<number> = {'IRON': 0, 'BRONZE': 1000, 'SILVER': 2000, 'GOLD': 3000, 'PLATINUM': 4000, 'DIAMOND': 5000, 'MASTER': 6000, 'GRANDMASTER': 7000, 'CHALLENGER': 8000}
+const rank2int: IDictionary<number> = {'I': 4000, 'II': 3000, 'III': 2000, 'IV': 1000}
+const tier2int: IDictionary<number> = {'IRON': 10000, 'BRONZE': 20000, 'SILVER': 30000, 'GOLD': 40000, 'PLATINUM': 50000, 'DIAMOND': 60000, 'MASTER': 70000, 'GRANDMASTER': 80000, 'CHALLENGER': 90000 }
 
 export default async function getUser(users: string[]) {
     const ranking: IUser[] = []
@@ -26,7 +26,7 @@ export default async function getUser(users: string[]) {
         if (profiles.length) {
             for (const profile of profiles) {
                 if (profile.queueType === 'RANKED_SOLO_5x5') {
-                    points = ~profile.leaguePoints + rank2int[profile.rank] + tier2int[profile.tier]
+                    points = +profile.leaguePoints + rank2int[profile.rank] + tier2int[profile.tier]
                     tier = `${profile.tier} ${profile.rank} ${profile.leaguePoints}`
                     break
                 }

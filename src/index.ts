@@ -6,8 +6,6 @@ import deploy_commands from './deploy-commands'
 const { users, token } = require('../settings.json')
 export const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
 
-deploy_commands()
-
 client.once('ready', async () => {
     console.log('[*] Ready')
     client.user?.setActivity('\"/랭킹\" 를 입력하세요', { type: 'LISTENING' })
@@ -19,22 +17,25 @@ client.on('interactionCreate', async interaction => {
 	const { commandName } = interaction
 
 	if (commandName === '랭킹') {
+        await interaction.reply({ embeds: [new MessageEmbed({
+            title: '불러오는 중',
+            description: '조금만 기다려주세요.',
+            color: 'RED'
+        })] })
         const ranking = getUser(users)
         const embed = new MessageEmbed({
             title: '엑조디아 랭킹',
             color: 'PURPLE',
             description: '엑조디아 멤버들',
             timestamp: new Date(),
-	        footer: {
-		        text: 'Exodia'
-	        },
+	        footer: { text: 'Exodia' },
         })
         let i: number = 1
         for (const user of await ranking) {
             embed.addField(`${i}등 ${user.name}`, user.tier)
             i++
         }
-		await interaction.reply({ embeds: [embed] })
+		await interaction.editReply({ embeds: [embed] })
 	}
 })
 
