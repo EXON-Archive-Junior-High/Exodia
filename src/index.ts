@@ -1,9 +1,12 @@
 import { Client, Intents, MessageEmbed } from 'discord.js'
 
 import getUser from './getUser'
+import deploy_commands from './deploy-commands'
 
 const { users, token } = require('../settings.json')
 export const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
+
+deploy_commands()
 
 client.once('ready', async () => {
     console.log('[*] Ready')
